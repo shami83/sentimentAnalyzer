@@ -1,7 +1,5 @@
 package com.passinfracom.sentimentAnalyzer.core;
 
-import org.springframework.stereotype.Component;
-
 public class SentimantAnalyzerFactory {
 	private static SentimantAnalyzerFactory instance = new SentimantAnalyzerFactory();
 

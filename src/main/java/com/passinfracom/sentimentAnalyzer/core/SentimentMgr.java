@@ -23,7 +23,7 @@ public class SentimentMgr {
 
 		public String extractSentiment(String tweet) {			
 			ICommand cmd = new TwitterCommand();
-			Map map= new HashMap<String,String>();
+			Map<String,String> map= new HashMap<>();
 			Map<String,String> responseMap= new HashMap<String,String>();
 			map.put("Tweet", tweet);
 			cmd.buildCommand(map);

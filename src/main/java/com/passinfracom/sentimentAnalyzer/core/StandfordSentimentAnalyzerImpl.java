@@ -3,7 +3,6 @@ package com.passinfracom.sentimentAnalyzer.core;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
-import org.ejml.simple.SimpleMatrix;
 
 import com.passinfracom.sentimentAnalyzer.core.command.ICommand;
 
