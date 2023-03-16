@@ -3,14 +3,10 @@ package com.passinfracom.sentimentAnalyzer.tweeter.core.response;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.passinfracom.sentimentAnalyzer.core.SentimantAnalyzerFactory;
-import com.passinfracom.sentimentAnalyzer.core.SentimentAnalyzer;
 import com.passinfracom.sentimentAnalyzer.core.SentimentMgr;
-import com.passinfracom.sentimentAnalyzer.core.command.ICommand;
-import com.passinfracom.sentimentAnalyzer.core.command.TwitterCommand;
 
 public class SearchResponse {
 
@@ -42,15 +38,20 @@ public class SearchResponse {
 		for (TweetSearch search : this.getData()) {
 			User mappedUser = new User();
 			mappedUser.setUser_Id(search.getAuthor());
-			int index = this.getIncludes().getUsers().indexOf(mappedUser);
-			User user = this.getIncludes().getUsers().get(index);
-			String sentiment = SentimentMgr.getInstance().extractSentiment(search.getTweet());			
-			Map<String, Object> values = new HashMap<>();
-			values.put("tweet", search);
-			values.put("user", user);
-			values.put("sentiment", sentiment);
-			responseMap.put(search.getTweetId(), values);
-			
+			try {
+				Stream<User> userStream = this.getIncludes().getUsers().stream()
+						.filter(user -> user.getUser_Id().equals(mappedUser.getUser_Id()));
+				User user = userStream.distinct().findFirst().get();
+				String sentiment = SentimentMgr.getInstance().extractSentiment(search.getTweet());
+				Map<String, Object> values = new HashMap<>();
+				values.put("tweet", search);
+				values.put("user", user);
+				values.put("sentiment", sentiment);
+				responseMap.put(search.getTweetId(), values);
+			} catch (Exception e) {
+				System.out.println("user details not found " + mappedUser);
+			}
+
 		}
 
 		return responseMap;

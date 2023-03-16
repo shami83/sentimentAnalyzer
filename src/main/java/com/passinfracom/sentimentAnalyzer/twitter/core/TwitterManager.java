@@ -46,7 +46,7 @@ public class TwitterManager {
 
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
 				// Add query parameter
-				.queryParam("user.fields", "public_metrics");
+				.queryParam("user.fields", "created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,verified_type,withheld");
 
 		log.info("Calling :: {}", builder.build().toUriString());
 
@@ -67,7 +67,7 @@ public class TwitterManager {
 		UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(url)
 				// Add query parameter
 				.queryParam("query", hashTag).queryParam("expansions", "author_id,geo.place_id")
-				.queryParam("user.fields", "username,location");
+				.queryParam("user.fields", "created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified,verified_type,withheld");
 
 		log.info("Calling :: {}" , builder.build().toUriString());
 
